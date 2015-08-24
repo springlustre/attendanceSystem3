@@ -1,0 +1,132 @@
+@(staff: List[Staff],staffForm:Form[(String,String,String,String,String,String)],username:String,identify:String)
+@import helper._
+@import models.Tool
+
+<!DOCTYPE html>
+<html lang="">
+<head>
+	<meta charset="utf-8">
+	<title>wifi考勤系统</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="@routes.Assets.at("css/style.css")"media="all" />
+		<!--[if IE]><link rel="stylesheet" href="@routes.Assets.at("css/ie.css")" media="all" /><![endif]-->
+		<!--[if lt IE 9]><link rel="stylesheet" href="@routes.Assets.at("css/lt-ie-9.css")" media="all" /><![endif]-->
+
+
+	<script src="//www.runoob.com/try/angularjs/1.2.5/angular.min.js"></script>
+
+
+</head>
+<body >
+<div class="testing">
+<header class="main">
+	<h1><strong>Ebupt</strong> 考勤系统</h1>
+	<input type="text" value="搜索" />
+</header>
+	<section class="user">
+		<div class="profile-img">
+			<p><img src="images/uiface2.png" alt="" height="40" width="40" /> 欢迎：@username 普通员工</p>
+		</div>
+
+		<div class="buttons">
+			<button class="ico-font">&#9206;</button>
+			<span class="button dropdown">
+				<a href="#">我的消息 <span class="pip">4</span></a>
+			</span>
+			<span class="button dropdown">
+				<a href="#">系统通知<span class="pip">6</span></a>
+			</span>
+			<span class="button">
+				<a href="@{routes.Application.personalInfo()}"> 个人设置</a> </span>
+			<span class="button">系统帮助</span>
+			<span class="button blue"><a href="@{routes.Application.logout()}">退出系统</a></span>
+		</div>
+	</section>
+</div>
+
+		<!--左侧导航栏-->
+		<!--左侧导航栏-->
+	<nav>
+		<ul>
+			<li ><a href="dashboard.html"><span class="icon">&#128240;</span>系统主页</a></li>
+			<li>
+				<a href="@{routes.Application.viewAttendOfOne(staff(0).staff_id,"","")}"><span class="icon">&#128196;</span>考勤查询</a>
+			</li>
+
+			<li>
+				<a href="@{routes.Application.viewOnlineOfAll}"><span class="icon">&#128246;</span>在线统计 <span class="pip">7</span></a>
+
+			</li>
+
+			<li class="section"><a href="@{routes.Application.absenceInfo()}"><span class="icon">&#128329;</span>缺勤统计</a></li>
+			<li><a href="@{routes.Application.analysisOfOneIndex()}"><span class="icon">&#128200;</span>走势分析<span class="pip">3</span></a></li>
+			<li>
+				<a href="#"><span class="icon">&#9992;</span>请假管理</a>
+
+			</li>
+			<li><a href="@{routes.Application.personalInfo()}"><span class="icon">&#59170;</span>个人信息<span class="pip">3</span></a></li>
+		</ul>
+	</nav>
+
+<!--上边栏和左边栏结束，开始主板内容-->
+<section class="content" >
+	<section class="widget">
+		<header>
+			<span class="icon">&#128100;</span>
+			<hgroup>
+				<h1>个人信息</h1>
+				<h2>管理员工基本信息</h2>
+			</hgroup>
+			<aside>
+			</aside>
+		</header>
+
+
+		<div class="content" id="showModifyInput" >
+			<form style=" margin-left:250px;" action="@{routes.Application.modifyStaff}" method="post" >
+				<h1 style="font-size:24px">我的个人信息</h1>
+				@staff.map { staff =>
+					<input type="text" name="staff_id" class="add_input" id="modify_staff_id"
+					value=@staff.staff_id />
+					<input type="text" name="staff_name" class="add_input" id="modify_staff_name"
+					value=@staff.staff_name />
+
+					<input type="text" name="apartment" class="add_input" id="modify_apartment"
+					value=@staff.apartment />
+
+					<input type="text" name="staff_sex" class="add_input" id="modify_staff_sex"
+					value=@staff.staff_sex />
+
+					<input type="text" name="mac_address" class="add_input" id="modify_mac_address"
+					value=@staff.mac_address />
+
+					<input type="text" name="mobile" class="add_input" id="modify_mobile"
+					value=@staff.mobile />
+
+					<input type="submit" class="ok_btn" value="确定"/>
+				}
+			</form>
+
+		</div>
+
+	</section>
+</section>
+
+	<script src="@routes.Assets.at("javascripts/angular_ajax.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/hello.js")" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script src="@routes.Assets.at("js/jquery.wysiwyg.js")"></script>
+	<script src="@routes.Assets.at("js/custom.js")"></script>
+	<script src="@routes.Assets.at("js/cycle.js")"></script>
+	<script src="@routes.Assets.at("js/jquery.checkbox.min.js")"></script>
+	<script src="@routes.Assets.at("js/flot.js")"></script>
+	<script src="@routes.Assets.at("js/flot.resize.js")"></script>
+	<script src="@routes.Assets.at("js/flot-graphs.js")"></script>
+	<script src="@routes.Assets.at("js/flot-time.js")"></script>
+	<script src="@routes.Assets.at("js/cycle.js")"></script>
+	<script src="@routes.Assets.at("js/jquery.tablesorter.min.js")"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <script language="JavaScript">
+        var req = null;
+        function test() {
+                var province = document.all("province").value;
+                req = new ActiveXObject("Microsoft.XMLHTTP");
+                //设置属性，当后台处理完成后，回来调用myDeal方法。
+                req.onreadystatechange = myDeal;
+                //发出请求
+                req.open("GET", "c.jsp?province=" + province, "false");
+                req.send(null);
+        }
+        function myDeal() {
+                if (req.readyState == 4) {
+                        //接收服务端返回的数据
+                        var ret = req.responseText;
+                        //处理数据
+                        var obj = document.all("city");
+                        for (var i = obj.options.length - 1; i >= 0; i--) {
+                                obj.options.remove(i); //从后往前删除
+                        }
+                        var ops = ret.split("|");
+                        for (var i = 0; i < ops.length; i++) {
+                                var op = ops[i];
+                                var ss = op.split(",");
+                                var oOption = document.createElement("OPTION"); //创建一个OPTION节点
+                                obj.options.add(oOption);    //将节点加入city选项中
+                                oOption.innerText = ss[1];    //设置选择展示的信息
+                                oOption.value = ss[0];         //设置选项的值
+                        }
+                }
+        }
+</script>
+
+  省份：<select id="province" name="province" onchange="test();">
+  <option value="hn">河南</option>
+  <option value="sx">陕西</option>
+</select><br>
+  城市：<select id="city" name="city">
+  <option value="zz">郑州</option>
+  <option value="ly">洛阳</option>
+</select><br>
+
+</body>
+</html>

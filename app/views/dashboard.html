@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="">
+<head>
+	<meta charset="utf-8">
+	<title>Retina Dashboard</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="css/style.css" media="all" />
+	<!--[if IE]><link rel="stylesheet" href="css/ie.css" media="all" /><![endif]-->
+	<!--[if lt IE 9]><link rel="stylesheet" href="css/lt-ie-9.css" media="all" /><![endif]-->
+</head>
+<body>
+<div class="testing">
+<header class="main">
+	<h1><strong>Ebupt</strong> 考勤系统</h1>
+	<input type="text" value="搜索" />
+</header>
+<section class="user">
+	<div class="profile-img">
+		<p><img src="images/uiface2.png" alt="" height="40" width="40" /> 欢迎：王春泽  超级管理员</p>
+	</div>
+    
+	<div class="buttons">
+		<button class="ico-font">&#9206;</button>
+		<span class="button dropdown">
+			<a href="#">我的消息 <span class="pip">4</span></a>
+		</span> 
+		<span class="button dropdown">
+			<a href="#">系统通知<span class="pip">6</span></a>
+		</span> 
+		<span class="button">个人设置</span>
+		<span class="button">系统帮助</span>
+		<span class="button blue"><a href="index.html">退出系统</a></span>
+	</div>
+</section>
+</div>
+
+
+<!--左侧导航栏-->
+<nav>
+	<ul>
+		<li class="section"><a href="dashboard.html"><span class="icon">&#128240;</span>系统主页</a></li>
+		<li >
+			<a href="attendanceInfo.scala.html"><span class="icon">&#128196;</span>考勤查询</a>
+		</li>
+        
+		<li >
+			<a href="onlineInfo.scala.html"><span class="icon">&#128246;</span>在线统计 <span class="pip">7</span></a>
+			
+		</li>
+		<li>
+			<a href="attendanceRank.html"><span class="icon">&#127942;</span>考勤排行 <span class="pip">12</span></a>
+			
+		</li>
+		<li><a href="absenceInfo.scala.html"><span class="icon">&#128329;</span>缺勤统计</a></li>
+		<li><a href="attendanceAnalysis.scala.html"><span class="icon">&#128200;</span>走势分析<span class="pip">3</span></a></li>
+		<li>
+			<a href="absenceManage.html"><span class="icon">&#9992;</span>请假管理</a>
+			
+		</li>
+        <li><a href="userManage.scala.html"><span class="icon">&#59170;</span>人员管理<span class="pip">3</span></a></li>
+	</ul>
+</nav>
+
+<!--上边栏和左边栏结束，开始主板内容-->
+
+<section class="content">
+	<section class="widget">
+		<header>
+			<span class="icon">&#57349;</span>
+			<hgroup>
+				<h1>考勤情况</h1>
+				<h2>今天的考勤信息</h2>
+			</hgroup>
+			<aside>
+				<span ><a href="#">查看更多</a></span>
+			</aside>
+		</header>
+		<div class="content cycle">
+			<div id="flot-example-2" class="graph-area"></div>
+			<div id="flot-example-1" class="graph-area"></div>
+		</div>
+		</div>
+	</section>
+	
+	<div class="widget-container">
+		<section class="widget small">
+			<header>
+				<span class="icon">&#128202;</span>
+				<hgroup>
+					<h1>考勤排行</h1>
+					<h2>本周内考勤统计</h2>
+				</hgroup>
+				<aside>
+                <span ><a href="#">更多</a></span>
+				</aside>
+			</header>
+			<div class="content no-padding timeline">
+				
+			</div>
+		</section>
+		
+		<section class="widget 	small">
+			<header>
+				<span class="icon">&#128319;</span>
+				<hgroup>
+					<h1>缺勤状况</h1>
+					<h2>本周内缺勤统计</h2>
+				</hgroup>
+				<aside>
+					<span>
+						<a href="#">更多</a>
+						
+					</span>
+				</aside>
+			</header>
+			<div class="content">
+				<div class="field-wrap">
+					<input type="text" value="Title"/>
+				</div>
+				<div class="field-wrap">
+					<textarea id="quick_post" rows="5"></textarea>
+				</div>
+				<button type="submit" class="green">Post</button> <button type="submit" class="">Preview</button>
+			</div>
+		</section>
+	</div>
+	
+	<div class="widget-container">
+		<section class="widget small">
+			<header> 
+				<span class="icon">&#128318;</span>
+				<hgroup>
+					<h1>人员管理</h1>
+					<h2>对员工进行管理</h2>
+				</hgroup>
+				<aside>
+					<span>
+						<a href="#">更多</a>
+					</span>
+				</aside>
+			</header>
+			<div class="content">
+				<section class="stats-wrapper">
+					<div class="stats">
+						<p><span>10</span></p>
+						<p>部门</p>
+					</div>
+					<div class="stats">
+						<p><span>1000</span></p>
+						<p>员工</p>
+					</div>
+				</section>
+				<section class="stats-wrapper">
+					<div class="stats">
+						<p><span>5</span></p>
+						<p>管理员</p>
+					</div>
+					<div class="stats">
+						<p><span>10000</span></p>
+						<p>访问</p>
+					</div>
+				</section>
+			</div>
+		</section>
+		
+		<section class="widget small">
+			<header> 
+				<span class="icon">&#128363;</span>
+				<hgroup>
+					<h1>请假管理</h1>
+					<h2>对员工请假情况管理</h2>
+				</hgroup>
+				<aside>
+					<span>
+						<a href="#">更多</a>
+					</span>
+				</aside>
+			</header>
+			<div class="content no-padding timeline">
+				
+			</div>
+		</section>
+		
+	</div>
+	<div class="widget-container">
+		<div style="height:80px">
+		Powered By <a href="#">王春泽</a> - 更多信息请访问  <a href="http://www.ebupt.com/" target="_blank">ebupt</a>
+		</div>
+	</div>
+</section>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script src="js/jquery.wysiwyg.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/cycle.js"></script>
+<script src="js/jquery.checkbox.min.js"></script>
+<script src="js/flot.js"></script>
+<script src="js/flot.resize.js"></script>
+<script src="js/flot-time.js"></script>
+<script src="js/flot-pie.js"></script>
+<script src="js/flot-graphs.js"></script>
+<script src="js/cycle.js"></script>
+<script src="js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript">
+// Feature slider for graphs
+$('.cycle').cycle({
+	fx: "scrollHorz",
+	timeout: 0,
+    slideResize: 0,
+    prev:    '.left-btn', 
+    next:    '.right-btn'
+});
+</script>
+</body>
+</html>

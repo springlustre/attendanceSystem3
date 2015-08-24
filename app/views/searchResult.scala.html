@@ -1,0 +1,22 @@
+@(staff: List[Staff])
+@import helper._
+@main("搜索结果") {
+
+    <h1>共@staff.size 个搜索结果</h1>
+    @staff.map{staff=>
+        @staff.id
+        @staff.staff_id
+        @staff.staff_name
+        @staff.staff_sex
+        @staff.mac_address
+        @staff.mobile
+            @form(routes.Application.viewAttendOfOne(staff.staff_id,"","")){
+                 <input type="submit" value="查看考勤纪录"/>
+            }
+        @form(routes.Application.viewOnlineOfOne(staff.staff_id,"","")){
+            <input type="submit" value="查看在线信息"/>
+        }
+      <br>
+    }
+
+}

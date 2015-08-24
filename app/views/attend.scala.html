@@ -1,0 +1,95 @@
+@(attend: List[Attendance],staff_id:String,staff_name:String,period_start:String,period_end:String,
+        attendForm:Form[(String,String,String)],error:String)
+@import helper._
+    @import models.Tool
+
+@if(error!="none"){
+    <script>
+        alert('@error')
+    </script>
+}
+@main("attendance information") {
+ @staff_name @staff_id
+ 的考勤记录
+
+  时间@period_start ~ @period_end
+<br>
+
+    @form(action=routes.Application.searchOne){
+        姓名或工号<input type="text" name="staff_id" />
+        <input type="hidden" name="period_start"value="2"/>
+        <input type="hidden" name="period_end" value="2"/>
+        <input type="submit" value="ok" />
+    }
+
+@form(action=routes.Application.selOne){
+    <input type="hidden" name="staff_id" value=@staff_id />
+    <input type="text" name="period_start"value="2015-07-03"/>
+    <input type="text" name="period_end" value="2015-08-04"/>
+
+    <input type="submit" value="ok" />
+}
+
+    @if(staff_name!="所有员工") {
+        @form(action = routes.Application.selOne) {
+            <input type="hidden" name="staff_id" value=@staff_id />
+            <input type="hidden" name="period_start" value=@Tool.getLastWeekStart() />
+            <input type="hidden" name="period_end" value=@Tool.getLastWeekEnd() />
+
+            <input type="submit" value="上周" />
+        }
+        @form(action = routes.Application.selOne) {
+            <input type="hidden" name="staff_id" value=@staff_id />
+            <input type="hidden" name="period_start" value=@Tool.getNowWeekStart() />
+            <input type="hidden" name="period_end" value=@Tool.getNowWeekEnd() />
+
+            <input type="submit" value="本周" />
+        }
+
+        @form(action = routes.Application.selOne) {
+            <input type="hidden" name="staff_id" value=@staff_id />
+            <input type="hidden" name="period_start" value=@Tool.getNowMonthStart() />
+            <input type="hidden" name="period_end" value=@Tool.getNowMonthEnd() />
+
+            <input type="submit" value="本月" />
+        }
+    }
+
+
+<br>
+    <table>
+        <tr>
+            <td>日期</td>
+            <td>工号</td>
+            <td>姓名</td>
+            <td>上班时间</td>
+            <td>下班时间</td>
+            <td>出勤时长</td>
+            <td>核心工作时间</td>
+            <td>弹性工作时间</td>
+            <td>迟到</td>
+            <td>早退</td>
+
+        </tr>
+  @attend.map{attend=>
+      <tr>
+          <td> @attend.attend_date </td>
+          <td> @attend.staff_id </td>
+          <td> @staff_name </td>
+          <td> @attend.start_time</td>
+          <td> @attend.end_time</td>
+          <td> @Tool.getTotalTime(attend.start_time,attend.end_time)</td>
+          <td> @Tool.getCoreTime(attend.start_time,attend.end_time)</td>
+          <td> @Tool.getFlexibleTime(attend.start_time,attend.end_time)</td>
+          <td> @Tool.getlateTime(attend.start_time)</td>
+          <td> @Tool.getTardyTime(attend.end_time)</td>
+      </tr>
+
+    <br>
+
+    }
+        </table>
+    <br>
+
+
+}

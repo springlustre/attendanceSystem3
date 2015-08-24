@@ -1,0 +1,229 @@
+@(staff: List[Staff],staffForm:Form[(String,String,String,String,String,String)],username:String,identify:String)
+@import helper._
+@import models.Tool
+
+<!DOCTYPE html>
+<html lang="">
+<head>
+	<meta charset="utf-8">
+	<title>wifi考勤系统</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="@routes.Assets.at("css/style.css")"media="all" />
+		<!--[if IE]><link rel="stylesheet" href="@routes.Assets.at("css/ie.css")" media="all" /><![endif]-->
+		<!--[if lt IE 9]><link rel="stylesheet" href="@routes.Assets.at("css/lt-ie-9.css")" media="all" /><![endif]-->
+
+
+	<script src="//www.runoob.com/try/angularjs/1.2.5/angular.min.js"></script>
+
+	<script>
+	function modifyStaff(a,b,c,d,e,f){
+		document.getElementById('showStaffTable').style.display='none';
+		document.getElementById('showModifyInput').style.display='block';
+		//alert(d);alert(e);alert(f);
+		document.getElementById('modify_staff_id').value=a;
+		document.getElementById('modify_staff_name').value=b;
+		document.getElementById('modify_apartment').value=c;
+		document.getElementById('modify_staff_sex').value=d;
+		document.getElementById('modify_mac_address').value=e;
+		document.getElementById('modify_mobile').value=f;
+		}
+
+	</script>
+
+</head>
+<body >
+<div class="testing">
+<header class="main">
+	<h1><strong>Ebupt</strong> 考勤系统</h1>
+	<input type="text" value="搜索" />
+</header>
+<section class="user">
+	<div class="profile-img">
+		<p><img src="images/uiface2.png" alt="" height="40" width="40" /> 欢迎：@username  超级管理员</p>
+	</div>
+    
+	<div class="buttons">
+		<button class="ico-font">&#9206;</button>
+		<span class="button dropdown">
+			<a href="#">我的消息 <span class="pip">4</span></a>
+		</span> 
+		<span class="button dropdown">
+			<a href="#">系统通知<span class="pip">6</span></a>
+		</span> 
+		<span class="button">个人设置</span>
+		<span class="button">系统帮助</span>
+		<span class="button blue"><a href="@{routes.Application.logout()}">退出系统</a></span>
+	</div>
+</section>
+</div>
+
+
+<!--左侧导航栏-->
+<nav>
+	<ul>
+		<li ><a href="dashboard.html"><span class="icon">&#128240;</span>系统主页</a></li>
+		<li >
+			<a href="@{routes.Application.viewAttendOfAll}"><span class="icon">&#128196;</span>考勤查询</a>
+		</li>
+        
+		<li>
+			<a href="@{routes.Application.viewOnlineOfAll}"><span class="icon">&#128246;</span>在线统计 <span class="pip">7</span></a>
+			
+		</li>
+		<li>
+			<a href="attendanceRank.html"><span class="icon">&#127942;</span>考勤排行 <span class="pip">12</span></a>
+			
+		</li>
+		<li><a href="@{routes.Application.absenceInfo}"><span class="icon">&#128329;</span>缺勤统计</a></li>
+		<li><a href="@{routes.Application.analysisIndex()}"><span class="icon">&#128200;</span>统计分析<span class="pip">3</span></a></li>
+		<li>
+			<a href="absenceManage.html"><span class="icon">&#9992;</span>请假管理</a>
+			
+		</li>
+        <li class="section"><a href="@{routes.Staffs.index}"><span class="icon">&#59170;</span>人员管理<span class="pip">3</span></a></li>
+	</ul>
+</nav>
+
+<!--上边栏和左边栏结束，开始主板内容-->
+<section class="content" >
+	<section class="widget">
+		<header>
+			<span class="icon">&#128100;</span>
+			<hgroup>
+				<h1>人员管理</h1>
+				<h2>管理员工基本信息</h2>
+			</hgroup>
+			<aside>
+				<span>
+					<a href="#" onClick="document.getElementById('showStaffTable').style.display='none',document.getElementById('showStaffInput').style.display='block'">
+						增加员工</a>
+				</span>
+			</aside>
+		</header>
+		<div class="content" id="showStaffTable" style="display:inherit;" >
+			共@staff.size 个员工
+			<table id="myTable" border="0" width="100">
+				<thead>
+					<tr>
+						<th>工号</th>
+						<th>姓名</th>
+						<th>性别</th>
+						<th>部门</th>
+                        <th>E-mail</th>
+                        <th>MAC地址</th>
+                        <th>机型</th>
+                        <th>操作</th>
+
+					</tr>
+				</thead>
+					<tbody>
+						@staff.map { staff =>
+							<tr>
+								<td> @staff.staff_id </td>
+								<td>@staff.staff_name </td>
+								<td>@staff.staff_sex </td>
+								<td>@staff.apartment </td>
+								<td>wangchunze#ebupt.com</td>
+								<td>@staff.mac_address</td>
+								<td>@staff.mobile</td>
+								<td>
+									<form action="@{routes.Application.viewAttendOfOne(staff.staff_id,"","")}" method="post" style="display : inline">
+										<input type="submit" class="ok_btn" value="考勤纪录"/>
+									</form>
+									<form style="display : inline" >
+										<input type="button"  class="ok_btn" value="修改"
+										onclick="modifyStaff('@staff.staff_id','@staff.staff_name','@staff.apartment','@staff.staff_sex','@staff.mac_address','@staff.mobile'  )" />
+									</form>
+									<br>
+									<form action="@{routes.Application.viewOnlineOfOne(staff.staff_id,"","")}" method="post" style="display : inline" >
+										<input type="submit" class="ok_btn" value="在线统计"/>
+									</form>
+									<form action="@{routes.Application.deleteStaff(staff.id)}" method="post" style="display : inline" >
+										<input type="submit" class="ok_btn" value="删除"/>
+									</form>
+
+								</td>
+							</tr>
+						}
+						
+					</tbody>
+				</table>
+		</div>
+
+		<div class="content" id="showModifyInput" style="display: none" >
+			<form style=" margin-left:250px;" action="@{routes.Application.modifyStaff}" method="post" >
+				<h1 style="font-size:24px">修改员工信息</h1>
+				<input type="text" name="staff_id" class="add_input" id="modify_staff_id"
+				value="" />
+				<input type="text"  name="staff_name" class="add_input" id="modify_staff_name"
+				value="" />
+
+				<input type="text"  name="apartment" class="add_input" id="modify_apartment"
+				value="" />
+
+				<input type="text"  name="staff_sex" class="add_input" id="modify_staff_sex"
+				value="" />
+
+				<input type="text"  name="mac_address" class="add_input" id="modify_mac_address"
+				value="" />
+
+				<input type="text" name="mobile" class="add_input" id="modify_mobile"
+				value="" />
+
+				<input type="submit" class="ok_btn" value="确定"/>
+			</form>
+
+		</div>
+
+		<div class="content" id="showStaffInput" style="display:none">
+			<form style=" margin-left:250px;" action="@{routes.Application.newStaff}" method="post" >
+				<h1 style="font-size:24px">新增员工</h1>
+				<input type="text" value="工号" name="staff_id" class="add_input"
+				onFocus="if(this.value=='工号') this.value=''"
+				onBlur="if(this.value=='') this.value='工号'"/>
+				<input type="text" value="姓名" name="staff_name" class="add_input"
+				onFocus="if(this.value=='姓名') this.value=''"
+				onBlur="if(this.value=='') this.value='姓名'"/>
+
+				<input type="text" value="性别" name="staff_sex" class="add_input"
+				onFocus="if(this.value=='性别') this.value=''"
+				onBlur="if(this.value=='') this.value='性别'"/>
+
+				<input type="text" value="MAC" name="mac_address" class="add_input"
+				onFocus="if(this.value=='MAC') this.value=''"
+				onBlur="if(this.value=='') this.value='MAC'"/>
+
+				<input type="text" value="机型" name="mobile" class="add_input"
+				onFocus="if(this.value=='机型') this.value=''"
+				onBlur="if(this.value=='') this.value='机型'"/>
+
+				<input type="submit" class="ok_btn" value="确定"/>
+			</form>
+
+		</div>
+
+
+
+
+
+	</section>
+</section>
+
+	<script src="@routes.Assets.at("javascripts/angular_ajax.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/hello.js")" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script src="@routes.Assets.at("js/jquery.wysiwyg.js")"></script>
+	<script src="@routes.Assets.at("js/custom.js")"></script>
+	<script src="@routes.Assets.at("js/cycle.js")"></script>
+	<script src="@routes.Assets.at("js/jquery.checkbox.min.js")"></script>
+	<script src="@routes.Assets.at("js/flot.js")"></script>
+	<script src="@routes.Assets.at("js/flot.resize.js")"></script>
+	<script src="@routes.Assets.at("js/flot-graphs.js")"></script>
+	<script src="@routes.Assets.at("js/flot-time.js")"></script>
+	<script src="@routes.Assets.at("js/cycle.js")"></script>
+	<script src="@routes.Assets.at("js/jquery.tablesorter.min.js")"></script>
+</body>
+</html>

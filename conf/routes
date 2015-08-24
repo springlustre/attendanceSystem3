@@ -1,0 +1,63 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                               controllers.Staffs.index
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                   controllers.Assets.at(path="/public", file)
+
+#staff
+GET         /staff                          controllers.Application.staff
+
+POST        /staff                          controllers.Application.newStaff
+POST        /staffModify                    controllers.Application.modifyStaff
+POST        /staff/:id/delete               controllers.Application.deleteStaff(id:Long)
+POST        /attendance                     controllers.Application.viewAttendOfOne(staff_id:String,period_start:String,period_end:String)
+
+GET         /personalIndex                  controllers.Application.personalInfo
+
+#login
+GET         /login                          controllers.Application.login
+POST        /login                          controllers.Application.authenticate
+GET         /logout                         controllers.Application.logout
+
+#attendance of someone
+GET         /attendance/showAll             controllers.Application.viewAttendOfAll
+GET         /attendance                     controllers.Attendances.someOne(staff_id:String,period_start:String,period_end:String)
+GET         /attendance/search              controllers.Attendances.someOneErr(period_start:String,period_end:String,error:String)
+GET         /attendance/all                 controllers.Attendances.allOne(period_start:String,period_end:String)
+GET         /attendance/searchResult        controllers.Application.searchResult(staff_name:String)
+POST        /attendance/one                 controllers.Application.selOne
+POST        /attendance/searchOne           controllers.Application.searchOne
+
+#online information of someone
+GET         /onlineDate/showAll             controllers.Application.viewOnlineOfAll
+GET         /onlineDate/all                 controllers.Attendances.allOneOfOnline(period_start:String,period_end:String)
+POST        /onlineData                     controllers.Application.viewOnlineOfOne(staff_id:String,period_start:String,period_end:String)
+GET         /onlineData                     controllers.Attendances.onLineOfOne(staff_id:String,period_start:String,period_end:String)
+POST        /onlineDate/one                 controllers.Application.selOneOfOnline
+POST        /onlineDate/searchOne           controllers.Application.searchOneOfOnline
+GET         /onlineDate/search              controllers.Attendances.onLineOfOneErr(period_start:String,period_end:String,error:String)
+
+GET         /absence                        controllers.Application.absenceInfo()
+POST        /selAbsence                     controllers.Application.selAbsence
+
+GET         /analysis                       controllers.Application.analysisIndex
+GET         /analysisOfOne                  controllers.Application.analysisOfOneIndex
+POST        /analysisWeek                   controllers.Analysis.analysisApartmentOfWeek
+POST        /analysismonth                  controllers.Analysis.analysisApartmentOfMonth
+POST        /analysisStaff                  controllers.Analysis.analysisForStaff
+
+GET         /selStaff/:staff_id             controllers.Application.selStaff(staff_id:String)
+
+GET         /search/:term                   controllers.Search.perform(term:String)
+GET         /search/                        controllers.Search.perform(term:String="")
+
+GET         /offOfOne                       controllers.OffManage.showOffById
+POST        /offOfOne                       controllers.OffManage.newOffmessage
+GET         /off                            controllers.OffManage.viewAll
+POST        /off                            controllers.OffManage.viewByApartment
+
+

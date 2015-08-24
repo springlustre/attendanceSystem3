@@ -1,0 +1,89 @@
+@(online: List[Online],staff_id:String,staff_name:String,period_start:String,period_end:String,
+            onlineForm:Form[(String,String,String)],error:String)
+    @import helper._
+    @import models.Tool
+
+    @if(error!="none"){
+        <script>
+        alert('@error')
+    </script>
+    }
+    @main("attendance information") {
+        @staff_name @staff_id
+        的在线信息
+
+        时间@period_start ~ @period_end
+        <br>
+
+        @form(action=routes.Application.searchOneOfOnline()){
+            姓名或工号<input type="text" name="staff_id" />
+            <input type="hidden" name="period_start"value="2"/>
+            <input type="hidden" name="period_end" value="2"/>
+            <input type="submit" value="搜索" />
+        }
+
+
+
+        @if(staff_name!="所有员工") {
+            @form(action=routes.Application.selOneOfOnline){
+                <input type="hidden" name="staff_id" value=@staff_id />
+                <input type="text" name="period_start"value=@Tool.getNowDate() />
+                <input type="hidden" name="period_end" value="none"/>
+
+                <input type="submit" value="ok" />
+            }
+            @form(action = routes.Application.selOneOfOnline) {
+                <input type="hidden" name="staff_id" value=@staff_id />
+                <input type="hidden" name="period_start" value=@Tool.getYesterday() />
+                <input type="hidden" name="period_end" value=@Tool.getYesterday() />
+
+                <input type="submit" value="昨天" />
+            }
+
+            @form(action = routes.Application.selOneOfOnline) {
+                <input type="hidden" name="staff_id" value=@staff_id />
+                <input type="hidden" name="period_start" value=@Tool.getNowDate() />
+                <input type="hidden" name="period_end" value=@Tool.getNowDate() />
+
+                <input type="submit" value="今天" />
+            }
+            @form(action = routes.Application.selOneOfOnline) {
+                <input type="hidden" name="staff_id" value=@staff_id />
+                <input type="hidden" name="period_start" value=@Tool.getNowWeekStart() />
+                <input type="hidden" name="period_end" value=@Tool.getNowWeekEnd() />
+
+                <input type="submit" value="本周" />
+            }
+
+        }
+
+
+        <br>
+        <table>
+            <tr>
+                <td>日期</td>
+                <td>工号</td>
+                <td>姓名</td>
+                <td>上线时间</td>
+                <td>下线时间</td>
+                <td>在线时长</td>
+
+            </tr>
+            @online.map{online=>
+                <tr>
+                    <td> @online.attend_date </td>
+                    <td> @online.staff_id </td>
+                    <td> @staff_name </td>
+                    <td> @online.on_time</td>
+                    <td> @online.off_time</td>
+                    <td> @Tool.getTotalTime(online.on_time,online.off_time)</td>
+                </tr>
+
+                <br>
+
+            }
+        </table>
+        <br>
+
+
+    }

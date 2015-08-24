@@ -1,0 +1,225 @@
+@(attend: List[Attendance],staff_id:String,staff_name:String,period_start:String,period_end:String,
+		attendForm:Form[(String,String,String)],error:String)
+@import helper._
+@import models.Tool
+@import models.Staff
+<!DOCTYPE html>
+<html lang="">
+<head>
+	<meta charset="utf-8">
+	<title>wifi考勤系统</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="@routes.Assets.at("css/style.css")"media="all" />
+	<!--[if IE]><link rel="stylesheet" href="@routes.Assets.at("css/ie.css")" media="all" /><![endif]-->
+	<!--[if lt IE 9]><link rel="stylesheet" href="@routes.Assets.at("css/lt-ie-9.css")" media="all" /><![endif]-->
+
+	@if(error!="none"){
+		<script>
+        alert('@error')
+    </script>
+	}
+	<link rel="stylesheet" href="@routes.Assets.at("css/zebra_datepicker.css")" type="text/css">
+	<script type="text/javascript" src="@routes.Assets.at("js/jquery-1.8.2.js")"></script>
+	<script type="text/javascript" src="@routes.Assets.at("js/zebra_datepicker.js")"></script>
+	<script type="text/javascript" src="@routes.Assets.at("js/functions.js")"></script>
+
+
+</head>
+<body>
+<div class="testing">
+<header class="main">
+	<h1><strong>Ebupt</strong> 考勤系统</h1>
+	<input type="text" value="搜索" />
+</header>
+<section class="user">
+	<div class="profile-img">
+		<p><img src="images/uiface2.png" alt="" height="40" width="40" /> 欢迎：王春泽  超级管理员</p>
+	</div>
+    
+	<div class="buttons">
+		<button class="ico-font">&#9206;</button>
+		<span class="button dropdown">
+			<a href="#">我的消息 <span class="pip">4</span></a>
+		</span> 
+		<span class="button dropdown">
+			<a href="#">系统通知<span class="pip">6</span></a>
+		</span> 
+		<span class="button">个人设置</span>
+		<span class="button">系统帮助</span>
+		<span class="button blue"><a href="@{routes.Application.logout()}">退出系统</a></span>
+	</div>
+</section>
+</div>
+
+<!--左侧导航栏-->
+<!--左侧导航栏-->
+<nav>
+	<ul>
+		<li ><a href="dashboard.html"><span class="icon">&#128240;</span>系统主页</a></li>
+		<li class="section">
+			<a href="@{routes.Application.viewAttendOfAll}"><span class="icon">&#128196;</span>考勤查询</a>
+		</li>
+        
+		<li>
+			<a href="@{routes.Application.viewOnlineOfAll}"><span class="icon">&#128246;</span>在线统计 <span class="pip">7</span></a>
+			
+		</li>
+		<li>
+			<a href="attendanceRank.html"><span class="icon">&#127942;</span>考勤排行 <span class="pip">12</span></a>
+			
+		</li>
+		<li><a href="@{routes.Application.absenceInfo}"><span class="icon">&#128329;</span>缺勤统计</a></li>
+		<li><a href="@{routes.Application.analysisIndex()}"><span class="icon">&#128200;</span>统计分析<span class="pip">3</span></a></li>
+		<li>
+			<a href="absenceManage.html"><span class="icon">&#9992;</span>请假管理</a>
+			
+		</li>
+        <li><a href="@{routes.Staffs.index}"><span class="icon">&#59170;</span>人员管理<span class="pip">3</span></a></li>
+	</ul>
+</nav>
+
+<!--上边栏和左边栏结束，开始主板内容-->
+
+<section class="content">
+	<section class="widget">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>考勤查询</h1>
+				<h2>查询员工考勤情况</h2>
+			</hgroup>
+			<aside>
+				<span>
+					<a href="#">更多</a>
+				</span>
+			</aside>
+		</header>
+        
+        <div class="content">
+          <div style="width:400px; height:50px; font-size:18px;">
+			  @staff_name 的考勤纪录
+			  @period_start ~ @period_end
+          </div>
+          <div style="width:300px;margin-top:-53px;margin-left:380px; font-size:18px">
+          <form>部门
+            <select name="department">
+             <option value="all">全部</option>
+             <option value="department1">部门一</option>
+             <option value="department2">部门二</option>
+             <option value="department3">部门三</option>
+             <option value="department4">部门四</option>
+            </select>
+            员工
+            <select name="staff">
+             <option value="all">全部</option>
+             <option value="department1">1</option>
+             <option value="department2">2</option>
+             <option value="department3">3</option>
+             <option value="department4">4</option>
+            </select>
+            
+            <input type="submit" class="ok_btn" value="确定"/>
+          </form>
+          </div>
+          
+          <div style="width:300px; margin-left:680px; margin-top:-42px;">
+			  @form(action=routes.Application.searchOne) {
+				  <input type="text" value="工号或姓名" class="search_input"
+				  onFocus="if (this.value=='工号或姓名') this.value=''"
+				  onblur="if (this.value=='') this.value='工号或姓名'"
+				  name="staff_id"/>
+				  <input type="hidden" name="period_start"value="2"/>
+				  <input type="hidden" name="period_end" value="2"/>
+				  <input type="submit" class="ok_btn" value="确定"/>
+			  }
+          </div>
+          
+        </div>
+        
+        <div style="padding:2px 2px 0px 30px; margin-top:-30px; margin-bottom:-10px;">
+			@if(staff_name!="所有员工") {
+				<form action ="@{routes.Application.selOne}" method="post" style="display : inline">
+					<input type="hidden" name="staff_id" value=@staff_id />
+					<input type="hidden" name="period_start" value=@Tool.getLastWeekStart() />
+					<input type="hidden" name="period_end" value=@Tool.getLastWeekEnd() />
+					<input type="submit" value="上周" class="date_btn"/>
+				</form>
+
+				<form style="display : inline" action ="@{routes.Application.selOne}" method="post">
+					<input type="hidden" name="staff_id" value=@staff_id />
+					<input type="hidden" name="period_start" value=@Tool.getNowWeekStart() />
+					<input type="hidden" name="period_end" value=@Tool.getNowWeekEnd() />
+					<input type="submit" value="本周" class="date_btn"/>
+				</form>
+				<form style="display : inline" action ="@{routes.Application.selOne}" method="post">
+					<input type="hidden" name="staff_id" value=@staff_id />
+					<input type="hidden" name="period_start" value=@Tool.getNowMonthStart() />
+					<input type="hidden" name="period_end" value=@Tool.getNowMonthEnd() />
+					<input type="submit" value="本月" class="date_btn"/>
+				</form>
+
+				<form style="display : inline ; margin-left:20px ;"action ="@{routes.Application.selOne}" method="post">
+					<input type="hidden" name="staff_id" value=@staff_id />
+					<input type="text" id="datepicker-example1" name="period_start" value="时间 yyyy-mm-dd" class="search_input"
+					onblur="if (this.value=='') this.value='时间 yyyy-mm-dd'"
+					/>--
+					<input type="text" id="dateInput" name="period_end" value="时间 yyyy-mm-dd" class="search_input"
+					onblur="if (this.value=='') this.value='时间 yyyy-mm-dd'"
+					/>
+					<input type="submit" class="ok_btn" value="查询" />
+				</form>
+			}
+        </div>
+        
+		<div class="content" style="height:510px; overflow-y: scroll;">
+			<table id="myTable" border="0" width="100">
+				<thead>
+					<tr>
+						<th>日期</th>
+						<th >工号</th>
+						<th>姓名</th>
+						<th>上班时间</th>
+						<th>下班时间</th>
+                        <th>出勤时长/h</th>
+                        <th >核心工作时间/h</th>
+                        <th>弹性工作时间/h</th>
+                        <th>迟到/min</th>
+                        <th>早退/min</th>
+					</tr>
+				</thead>
+					<tbody>
+						@attend.map { attend =>
+							<tr>
+								<td> @attend.attend_date </td>
+								<td> @attend.staff_id </td>
+								<td> @Staff.getNameById(attend.staff_id) </td>
+								<td> @attend.start_time</td>
+								<td> @attend.end_time</td>
+								<td> @Tool.getTotalTime(attend.start_time,attend.end_time)</td>
+								<td> @Tool.getCoreTime(attend.start_time,attend.end_time)</td>
+								<td> @Tool.getFlexibleTime(attend.start_time,attend.end_time)</td>
+								<td> @Tool.getlateTime(attend.start_time)</td>
+								<td> @Tool.getTardyTime(attend.end_time)</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+		</div>
+	</section>
+</section>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script src="@routes.Assets.at("js/jquery.wysiwyg.js")"></script>
+<script src="@routes.Assets.at("js/custom.js")"></script>
+<script src="@routes.Assets.at("js/cycle.js")"></script>
+<script src="@routes.Assets.at("js/jquery.checkbox.min.js")"></script>
+<script src="@routes.Assets.at("js/flot.js")"></script>
+<script src="@routes.Assets.at("js/flot.resize.js")"></script>
+<script src="@routes.Assets.at("js/flot-graphs.js")"></script>
+<script src="@routes.Assets.at("js/flot-time.js")"></script>
+<script src="@routes.Assets.at("js/cycle.js")"></script>
+<script src="@routes.Assets.at("js/jquery.tablesorter.min.js")"></script>
+</body>
+</html>
