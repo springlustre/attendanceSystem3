@@ -1,0 +1,53 @@
+@(off:List[Off],selForm:Form[(String,String,String)])
+@import models.Off
+@import helper._
+@import models.Tool
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+
+  <form action="@{routes.OffManage.viewByApartment}" method="post">
+    <select name="apartment" id="selectValue" style="font-size:15px; border:hidden">
+      <option value="1">部门a</option>
+      <option value="2">部门b</option>
+      <option value="3">部门c</option>
+      <option value="4">部门d</option>
+      <option value="5">部门e</option>
+    </select>
+
+    <input type="hidden" name="period_start" value=@Tool.getNowWeekStart() />
+    <input type="hidden" name="period_end" value=@Tool.getNowWeekEnd() />
+    <input type="submit" class="date_btn" value="本周" />
+  </form>
+
+
+  @off.map{off=>
+          <tr>
+            <td>
+    @off.title
+            </td>
+            <td>
+    @off.reason
+              </td>
+            <td>
+    @off.date
+              </td>
+            <td>
+    @off.datetime
+              </td>
+            <td>
+    @off.allow
+            </td>
+            <td>
+
+            </td>
+    </tr>
+  }
+
+
+</body>
+</html>

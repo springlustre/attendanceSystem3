@@ -1677,4 +1677,92 @@ ul.icon-fonts li .html {
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 }
-	 
+
+/** TABLE STYLES **/
+
+table#myTable2 input[type="checkbox"]{
+	width: 30px;
+	margin: 0;
+}
+
+
+
+table#myTable2 tr:nth-child(odd) {
+	background:#f0f0f0;
+}
+
+table#myTable2 {
+	border:1px solid #e9e9e9;
+	width:100%;
+	-khtml-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	font-size:14px
+}
+
+table#myTable2 thead tr {
+	background: #ededee !important;
+	background: -moz-linear-gradient(top, #ededee 0%, #dddddd 100%) !important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededee), color-stop(100%,#dddddd)) !important;
+	background: -webkit-linear-gradient(top, #ededee 0%,#dddddd 100%) !important;
+	background: -o-linear-gradient(top, #ededee 0%,#dddddd 100%) !important;
+	background: -ms-linear-gradient(top, #ededee 0%,#dddddd 100%) !important;
+	background: linear-gradient(to bottom, #ededee 0%,#dddddd 100%) !important;
+	border-bottom: 1px solid #fff;
+}
+
+table#myTable2 thead tr:hover {
+	color: #000;
+}
+
+table#myTable2 tr {
+	border:1px solid #e9e9e9;
+	background:#fff;
+}
+
+table#myTable2 tr:hover {
+	background: #208ed3; /* Old browsers */
+	background: -moz-linear-gradient(top, #208ed3 0%, #0272bd 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#208ed3), color-stop(100%,#0272bd)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #208ed3 0%,#0272bd 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #208ed3 0%,#0272bd 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #208ed3 0%,#0272bd 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #208ed3 0%,#0272bd 100%); /* W3C */
+	color:#fff;
+	cursor:pointer;
+}
+
+table#myTable2 th {
+	font-weight:bold;
+	min-width:30px;
+	padding: 1px 0px 0px 1px;
+	text-align: left;
+}
+
+table#myTable2 td {
+	vertical-align: middle;
+	padding: 5px;
+}
+
+table#myTable2 thead tr .header {
+	background-image: url('../images/bg.gif');
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+	height: 2em;
+}
+
+table#myTable2 thead tr .headerSortUp {
+	background-image: url('../images/asc.gif');
+}
+
+table#myTable2 thead tr .headerSortDown {
+	background-image: url('../images/desc.gif');
+}
+
+table#myTable2 thead tr .headerSortDown, table#myTable thead tr .headerSortUp {
+	color: #208ed3;
+}

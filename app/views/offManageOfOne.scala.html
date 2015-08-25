@@ -5,24 +5,147 @@
 <!DOCTYPE html>
 <html lang="">
 <head>
-  <meta charset="UTF-8">
-  <title></title>
+	<meta charset="utf-8">
+	<title>Retina Dashboard</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="css/style.css" media="all" />
+	<!--[if IE]><link rel="stylesheet" href="css/ie.css" media="all" /><![endif]-->
+	<!--[if lt IE 9]><link rel="stylesheet" href="css/lt-ie-9.css" media="all" /><![endif]-->
 </head>
 <body>
-  @off.map{off=>
-    @off.title
-    @off.reason
-    @off.date
-    @off.datetime
-    @off.allow
-  }
+<div class="testing">
+<header class="main">
+	<h1><strong>Ebupt</strong> 考勤系统</h1>
+	<input type="text" value="搜索" />
+</header>
+<section class="user">
+	<div class="profile-img">
+		<p><img src="images/uiface2.png" alt="" height="40" width="40" /> 欢迎：王春泽  超级管理员</p>
+	</div>
+    
+	<div class="buttons">
+		<button class="ico-font">&#9206;</button>
+		<span class="button dropdown">
+			<a href="#">我的消息 <span class="pip">4</span></a>
+		</span> 
+		<span class="button dropdown">
+			<a href="#">系统通知<span class="pip">6</span></a>
+		</span> 
+		<span class="button">个人设置</span>
+		<span class="button">系统帮助</span>
+		<span class="button blue"><a href="index.html">退出系统</a></span>
+	</div>
+</section>
+</div>
 
-  <form action="@routes.OffManage.newOffmessage" method="post">
-    <input type="text" name="title"/>
-    <input type="text" name="reason"/>
-    <input type="text" name="date"/>
-    <input type="hidden" name="datetime" value=@Tool.getNowDate() />
-    <input type="submit" value="�ύ" />
-  </form>
+
+<!--左侧导航栏-->
+<nav>
+	<ul>
+		<li ><a href="dashboard.html"><span class="icon">&#128240;</span>系统主页</a></li>
+		<li >
+			<a href="attendanceInfo.html"><span class="icon">&#128196;</span>考勤查询</a>	
+		</li>
+        
+		<li>
+			<a href="onlineInfo.html"><span class="icon">&#128246;</span>在线统计 <span class="pip">7</span></a>
+			
+		</li>
+		<li>
+			<a href="attendanceRank.html"><span class="icon">&#127942;</span>考勤排行 <span class="pip">12</span></a>
+			
+		</li>
+		<li><a href="absenceInfo.html"><span class="icon">&#128329;</span>缺勤统计</a></li>
+		<li><a href="attendanceAnalysis.html"><span class="icon">&#128200;</span>走势分析<span class="pip">3</span></a></li>
+		<li>
+			<a href="absenceManage.html"><span class="icon">&#9992;</span>请假管理</a>
+			
+		</li>
+        <li class="section"><a href="userManage.html"><span class="icon">&#59170;</span>人员管理<span class="pip">3</span></a></li>
+	</ul>
+</nav>
+
+<!--上边栏和左边栏结束，开始主板内容-->
+<section class="content">
+	<section class="widget">
+		<header>
+			<span class="icon">&#128100;</span>
+			<hgroup>
+				<h1>人员管理</h1>
+				<h2>管理员工基本信息</h2>
+			</hgroup>
+			<aside>
+				<span>
+					<a href="#" onClick="document.getElementById('showOffTable').style.display='none',document.getElementById('showOffInput').style.display='block'">增加员工</a>
+				</span>
+			</aside>
+		</header>
+		<div class="content" id="showOffTable" style="display:inherit">
+			<table id="myTable2" border="0" width="120">
+				<thead>
+					<tr>
+						<th>申请时间</th>
+						<th>工号</th>
+						<th>姓名</th>
+						<th>部门</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>天数</th>
+                        <th width="20%">事由</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                        
+					</tr>
+				</thead>
+					<tbody>
+						<tr>
+							<td>2015-08-01</td>
+							<td>2012210812</td>
+							<td>王春泽</td>
+							<td>战略研究部</td>
+                            <td>08-01</td>
+                            <td>08-02</td>
+                            <td>2</td>
+                            <td>出差出出差出差出差出差出差出差出差出差出差出差出差出差出差出差出差出差</td>
+                            <td>无</td>
+                            <td><input type="submit" class="ok_btn" value="删除"/>
+                            </td>
+						</tr>
+                        
+						
+					</tbody>
+				</table>
+		</div>
+        <div class="content" id="showOffInput" style="display:none">
+			<form style=" margin-left:250px;" >
+            <h1 style="font-size:24px">新增请假信息</h1>
+                     <input type="text" value="请假开始时间" class="add_input" onFocus="this.value=''"
+                     onBlur="this.value='请假开始时间'"/>
+                     <input type="text" value="请假结束时间" class="add_input" onFocus="this.value=''"
+                     onBlur="this.value='请假结束时间'"/>
+                     <input type="text" value="请假事由" class="add_input" onFocus="this.value=''"
+                     onBlur="this.value='工号'"/>
+            <input type="submit" class="ok_btn" value="确定"/>
+            <input type="button" class="ok_btn" value="取消"
+            onClick="document.getElementById('showOffTable').style.display='inherit',document.getElementById('showOffInput').style.display='none'"/>
+            </form>
+                       
+		</div>
+	</section>
+</section>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script src="js/jquery.wysiwyg.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/cycle.js"></script>
+<script src="js/jquery.checkbox.min.js"></script>
+<script src="js/flot.js"></script>
+<script src="js/flot.resize.js"></script>
+<script src="js/flot-graphs.js"></script>
+<script src="js/flot-time.js"></script>
+<script src="js/cycle.js"></script>
+<script src="js/jquery.tablesorter.min.js"></script>
 </body>
 </html>

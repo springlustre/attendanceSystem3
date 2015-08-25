@@ -1,0 +1,28 @@
+@(off:List[Off],offForm:Form[(String,String,String,String)])
+@import models.Off
+@import helper._
+@import models.Tool
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  @off.map{off=>
+    @off.title
+    @off.reason
+    @off.date
+    @off.datetime
+    @off.allow
+  }
+
+  <form action="@routes.OffManage.newOffmessage" method="post">
+    <input type="text" name="title"/>
+    <input type="text" name="reason"/>
+    <input type="text" name="date"/>
+    <input type="hidden" name="datetime" value=@Tool.getNowDate() />
+    <input type="submit" value="Ìá½»" />
+  </form>
+</body>
+</html>

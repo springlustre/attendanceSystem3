@@ -4,50 +4,178 @@
 @import models.Tool
 <!DOCTYPE html>
 <html lang="">
-<head>
-  <meta charset="utf-8">
-  <title></title>
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
+		<title>缺勤信息</title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="robots" content="" />
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="@routes.Assets.at("css/style.css")"media="all" />
+			<!--[if IE]><link rel="stylesheet" href="@routes.Assets.at("css/ie.css")" media="all" /><![endif]-->
+			<!--[if lt IE 9]><link rel="stylesheet" href="@routes.Assets.at("css/lt-ie-9.css")" media="all" /><![endif]-->
 
-  <form action="@{routes.OffManage.viewByApartment}" method="post">
-    <select name="apartment" id="selectValue" style="font-size:15px; border:hidden">
-      <option value="1">����a</option>
-      <option value="2">����b</option>
-      <option value="3">����c</option>
-      <option value="4">����d</option>
-      <option value="5">����e</option>
-    </select>
+		<link rel="stylesheet" href="@routes.Assets.at("css/zebra_datepicker.css")" type="text/css">
+		<script type="text/javascript" src="@routes.Assets.at("js/jquery-1.8.2.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.at("js/zebra_datepicker.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.at("js/functions.js")"></script>
+	</head>
+	<body>
+		<div class="testing">
+			<header class="main">
+				<h1><strong>Ebupt</strong> 考勤系统</h1>
+				<input type="text" value="搜索" />
+			</header>
+			<section class="user">
+				<div class="profile-img">
+					<p><img src="images/uiface2.png" alt="" height="40" width="40" /> 欢迎：王春泽  超级管理员</p>
+				</div>
 
-    <input type="hidden" name="period_start" value=@Tool.getNowWeekStart() />
-    <input type="hidden" name="period_end" value=@Tool.getNowWeekEnd() />
-    <input type="submit" class="date_btn" value="����" />
-  </form>
+				<div class="buttons">
+					<button class="ico-font">&#9206;</button>
+					<span class="button dropdown">
+						<a href="#">我的消息 <span class="pip">4</span></a>
+					</span>
+					<span class="button dropdown">
+						<a href="#">系统通知<span class="pip">6</span></a>
+					</span>
+					<span class="button">个人设置</span>
+					<span class="button">系统帮助</span>
+					<span class="button blue"><a href="@{routes.Application.logout()}">退出系统</a></span>
+				</div>
+			</section>
+		</div>
 
+			<!--左侧导航栏-->
+		<nav>
+			<ul>
+				<li ><a href="dashboard.html"><span class="icon">&#128240;</span>系统主页</a></li>
+				<li >
+					<a href="@{routes.Application.viewAttendOfAll}"><span class="icon">&#128196;</span>考勤查询</a>
+				</li>
 
-  @off.map{off=>
-          <tr>
-            <td>
-    @off.title
-            </td>
-            <td>
-    @off.reason
-              </td>
-            <td>
-    @off.date
-              </td>
-            <td>
-    @off.datetime
-              </td>
-            <td>
-    @off.allow
-            </td>
-            <td>
+				<li>
+					<a href="@{routes.Application.viewOnlineOfAll}"><span class="icon">&#128246;</span>在线统计 <span class="pip">7</span></a>
 
-            </td>
-    </tr>
-  }
+				</li>
+				<li>
+					<a href="attendanceRank.html"><span class="icon">&#127942;</span>考勤排行 <span class="pip">12</span></a>
 
+				</li>
+				<li class="section"><a href="@{routes.Application.absenceInfo}"><span class="icon">&#128329;</span>缺勤统计</a></li>
+				<li><a href="@{routes.Application.analysisIndex()}"><span class="icon">&#128200;</span>统计分析<span class="pip">3</span></a></li>
+				<li>
+					<a href="absenceManage.html"><span class="icon">&#9992;</span>请假管理</a>
 
+				</li>
+				<li><a href="@{routes.Staffs.index}"><span class="icon">&#59170;</span>人员管理<span class="pip">3</span></a></li>
+			</ul>
+		</nav>
+
+		<!--上边栏和左边栏结束，开始主板内容-->
+<section class="content">
+	<section class="widget">
+		<header>
+			<span class="icon">&#128100;</span>
+			<hgroup>
+				<h1>请假管理</h1>
+				<h2>管理员工请假信息</h2>
+			</hgroup>
+			<aside>
+
+			</aside>
+		</header>
+
+		<div style="width:200px;margin-top:-53px;margin-left:190px; font-size:18px">
+			<form action="@{routes.Analysis.analysisForStaff()}" method="post">
+				<select name="id" id="selectValue2" style="font-size:15px; border:hidden" onchange="changeValue2(this.id)">
+					<option value="1">部门a</option>
+					<option value="2">部门b</option>
+					<option value="3">部门c</option>
+					<option value="4">部门d</option>
+					<option value="5">部门e</option>
+				</select>
+				<input type="hidden" name="period_start" value=@Tool.getLastWeekStart() />
+				<input type="hidden" name="period_end" value=@Tool.getLastWeekEnd() />
+				<input type="submit" class="date_btn" value="上周" />
+			</form>
+		</div>
+
+		<div style="width:300px; margin-left:326px; margin-top:-40px;">
+			<form action="@{routes.Analysis.analysisForStaff()}" method="post" style="display:inline">
+				<input type="hidden" name="id" id="now_week2" value="1"/>
+				<input type="hidden" name="period_start" value=@Tool.getNowWeekStart() />
+				<input type="hidden" name="period_end" value=@Tool.getNowWeekEnd() />
+				<input type="submit" class="date_btn" value="本周" />
+			</form>
+
+			<form action="@{routes.Analysis.analysisForStaff()}" method="post" style="display:inline">
+				<input type="hidden" name="id" id="now_month2" value="1"/>
+				<input type="hidden" name="period_start" value=@Tool.getNowMonthStart() />
+				<input type="hidden" name="period_end" value=@Tool.getNowMonthEnd() />
+				<input type="submit" class="date_btn" value="本月" />
+			</form>
+
+			<form action="@{routes.Analysis.analysisForStaff()}" method="post" style="display:inline">
+				<input type="hidden" name="id" id="last_month2" value="1"/>
+				<input type="hidden" name="period_start" value=@Tool.getLastMonthStart() />
+				<input type="hidden" name="period_end" value=@Tool.getLastMonthEnd() />
+				<input type="submit" class="date_btn" value="上月" />
+			</form>
+		</div>
+
+		<div class="content" id="showStaffTable" style="display:inherit">
+			<table id="myTable2" border="0" width="120">
+				<thead>
+					<tr>
+						<th>申请时间</th>
+						<th>工号</th>
+						<th>姓名</th>
+						<th>部门</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>天数</th>
+                        <th width="20%">事由</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                        
+					</tr>
+				</thead>
+					<tbody>
+					@off.map { off =>
+						<tr>
+							<td>2015-08-01</td>
+							<td> @off.staff_id </td>
+							<td>王春泽1</td>
+							<td>战略研究部</td>
+							<td>08-01</td>
+							<td>08-02</td>
+							<td>2</td>
+							<td>出差出出差出差出差出差出差出差出差出差出差出差出差出差出差出差出差出差</td>
+							<td>无</td>
+							<td><input type="submit" class="ok_btn" value="批准"/>
+								<input type="submit" class="ok_btn" value="驳回"/>
+							</td>
+						</tr>
+					}
+                        
+						
+					</tbody>
+				</table>
+		</div>
+        
+	</section>
+</section>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+		<script src="@routes.Assets.at("js/jquery.wysiwyg.js")"></script>
+		<script src="@routes.Assets.at("js/custom.js")"></script>
+		<script src="@routes.Assets.at("js/cycle.js")"></script>
+		<script src="@routes.Assets.at("js/jquery.checkbox.min.js")"></script>
+		<script src="@routes.Assets.at("js/flot.js")"></script>
+		<script src="@routes.Assets.at("js/flot.resize.js")"></script>
+		<script src="@routes.Assets.at("js/flot-graphs.js")"></script>
+		<script src="@routes.Assets.at("js/flot-time.js")"></script>
+		<script src="@routes.Assets.at("js/cycle.js")"></script>
+		<script src="@routes.Assets.at("js/jquery.tablesorter.min.js")"></script>
 </body>
 </html>
