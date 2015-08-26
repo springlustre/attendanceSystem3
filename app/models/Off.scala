@@ -10,18 +10,18 @@ import play.api.db.DB
 /**
  * Created by springlustre on 2015/8/20.
  */
-case class Off(staff_id:String,title:String,reason:String,date:String,datetime:String,allow:String)
+case class Off(staff_id:String,reason:String,date:String,off_start:String,off_end:String,allow:String)
 
 object Off{
   val off={
-    get[String]("staff_id")~get[String]("title")~get[String]("reason")~get[String]("date")~get[String]("datetime")~get[String]("allow") map{
-      case staff_id~title~reason~date~datetime~allow =>Off(staff_id,title,reason,date,datetime,allow)
+    get[String]("staff_id")~get[String]("reason")~get[String]("date")~get[String]("off_start")~get[String]("off_end")~get[String]("allow") map{
+      case staff_id~reason~date~off_start~off_end~allow =>Off(staff_id,reason,date,off_start,off_end,allow)
     }
   }
 
-  def createOff(staff_id:String,title:String,reason:String,date:String,datetime:String): Unit ={
-    DB.withConnection{implicit c=>SQL("insert into off_info(staff_id,title,reason,date,datetime) values (" +
-      "{staff_id},{title},{reason},{date},{datetime})").on('staff_id->staff_id,'title->title,'reason->reason,'date->date,'datetime->datetime).executeUpdate()
+  def createOff(staff_id:String,reason:String,date:String,off_start:String,off_end:String): Unit ={
+    DB.withConnection{implicit c=>SQL("insert into off_info(staff_id,reason,date,off_start,off_end) values (" +
+      "{staff_id},{reason},{date},{off_start},{off_end})").on('staff_id->staff_id,'reason->reason,'date->date,'off_start->off_start,'off_end->off_end).executeUpdate()
     }
   }
 
@@ -36,7 +36,7 @@ object Off{
   //
   def viewByApartment(apartment:String,start:String,end:String):List[Off]={
     DB.withConnection { implicit connection =>
-      SQL("select * from off_info where off_info.staff_id in (select staff_id FROM staff_info where(staff_info.apartment={apartment})) and datetime>={start} and datetime<={end}").on(
+      SQL("select * from off_info where off_info.staff_id in (select staff_id FROM staff_info where(staff_info.apartment={apartment})) and date>={start} and date<={end}").on(
         'apartment -> apartment,'start->start,'end->end
       ).as(Off.off.*)
     }
@@ -44,7 +44,7 @@ object Off{
 
   //
   def viewAll(start:String,end:String):List[Off] ={
-    DB.withConnection{implicit c=>SQL("select * from off_info where datetime>={start} and datetime<={end}").on(
+    DB.withConnection{implicit c=>SQL("select * from off_info where date>={start} and date<={end}").on(
     'start->start,'end->end).as(Off.off.*)
     }
   }
@@ -60,10 +60,10 @@ object Off{
 
   var offForm = Form(
   tuple(
-  "title"->nonEmptyText,
   "reason"->nonEmptyText,
   "date"->nonEmptyText,
-  "datetime"->nonEmptyText
+  "off_start"->nonEmptyText,
+    "off_end"->nonEmptyText
   )
   )
 
