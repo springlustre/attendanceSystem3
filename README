@@ -2,3 +2,6 @@ This is your new Play application
 =====================================
 
 This file will be packaged with your application, when using `play dist`.
+Welcome to the attendanceSystem3 wiki! 基于wifi的考勤管理系统，可以统计员工的出勤情况，在线时长，请假管理等，数据库的数据是离线生成的，使用 playframework2 和scala，mysql数据库，
+
+Attendance management system based on wifi, can staff attendance statistics, the online time, leave management, etc., the database is generated off-line data
